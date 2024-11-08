@@ -2,10 +2,13 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import exception.BankingException;
 import exception.InvalidAccountTypeException;
 import model.Account;
+import model.Bank;
 import utility.DBConnection;
 
 public class AccountDAOImpl implements AccountDAO {
@@ -59,6 +62,22 @@ public class AccountDAOImpl implements AccountDAO {
 	        }
 	    }
 
+		
+		@Override
+		public Account viewAccount(int accountId) throws SQLException {
+			String sql = "Select * from Account where accountId = ?";
+			try (Connection con = DBConnection.getConnection();
+					PreparedStatement ps = con.prepareStatement(sql)){
+				ps.setInt(1,accountId);
+			
+			ResultSet rs = ps.executeQuery(sql);
+			if(rs.next()) {
+				
+			}
+			
+			
+			}
+		}
 		
 		
 		

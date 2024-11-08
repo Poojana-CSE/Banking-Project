@@ -27,4 +27,8 @@ public class AccountService {
 		accountDAO.deleteAccount(accountId);
 	}
 	
+	public Account viewAccount(int accountId) throws SQLException {
+		return accountDAO.viewAccount(accountId);
+	}
+	
 }

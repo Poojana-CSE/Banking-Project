@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import exception.BankingException;
 import exception.InvalidAccountTypeException;
+import model.Account;
 import model.Bank;
 import model.CurrentAccount;
 import model.SavingsAccount;
@@ -50,6 +51,13 @@ public class BankController {
 					deleteAccount();
 					break;
 					
+					
+				case 4:
+					viewAccount();
+					break;
+					
+					
+					
 				}		
 				
 			}
@@ -60,7 +68,7 @@ public class BankController {
 		System.out.println("1. Create Account");
 		System.out.println("2. Update Account");
 		System.out.println("3. Delete Account");
-//		System.out.println("4. Create Account");
+		System.out.println("4. View Account");
 //		System.out.println("5. Create Account");
 //		System.out.println("6. Create Account");
 //		System.out.println("7. Create Account");
@@ -122,12 +130,14 @@ public class BankController {
 			double interestRate = Double.parseDouble(br.readLine());
 			SavingsAccount updatedAccount = new SavingsAccount(accountId, 0, bank, accountType, balance, interestRate);
 			accountService.updateAccount(updatedAccount);
-		} else if ("Current".equalsIgnoreCase(accountType)) {
+		} 
+		else if ("Current".equalsIgnoreCase(accountType)) {
 			System.out.println("Enter New Overdraft Limit: ");
 			double overdraftLimit = Double.parseDouble(br.readLine());
 			CurrentAccount updatedAccount = new CurrentAccount(accountId, 0, bank, accountType, balance, overdraftLimit);
 			accountService.updateAccount(updatedAccount);
-		} else {
+		} 
+		else {
 			throw new InvalidAccountTypeException("Invalid account type provided.");
 		}
 		
@@ -149,5 +159,23 @@ public class BankController {
 	        System.out.println("Failed to delete account: " + e.getMessage());
 	    }
 	}
+	
+	
+	public void viewAccount() throws NumberFormatException, IOException {
+	
+		System.out.println("Enter Account ID to view: ");
+		int accountId = Integer.parseInt(br.readLine());
+		try {
+	       Account account = accountService.viewAccount(accountId);
+	       System.out.println("Account Details: " + account);
+	    } catch (SQLException e) {
+	        System.out.println("Failed to view account: " + e.getMessage());
+	    }
+		
+		
+	}
+	
+	
+	
 	
 }//end of main class	
