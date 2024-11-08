@@ -63,21 +63,22 @@ public class AccountDAOImpl implements AccountDAO {
 	    }
 
 		
-		@Override
-		public Account viewAccount(int accountId) throws SQLException {
-			String sql = "Select * from Account where accountId = ?";
-			try (Connection con = DBConnection.getConnection();
-					PreparedStatement ps = con.prepareStatement(sql)){
-				ps.setInt(1,accountId);
+//		@Override
+//		public Account viewAccount(int accountId) throws SQLException {
+//			String sql = "Select * from Account where accountId = ?";
+//			try (Connection con = DBConnection.getConnection();
+//					PreparedStatement ps = con.prepareStatement(sql)){
+//				ps.setInt(1,accountId);
+//			
+//			ResultSet rs = ps.executeQuery(sql);
+//			if(rs.next()) {
+//				
+//				
+//				
+//				
+//			}
 			
-			ResultSet rs = ps.executeQuery(sql);
-			if(rs.next()) {
-				
-			}
 			
-			
-			}
-		}
 		
 		
 		

@@ -18,7 +18,14 @@ public class BankService {
 	}
 	public Bank getBankById(int bankId) throws SQLException,BankingException{
 		return bankDAO.getBankById(bankId);
-		
 	}
+	
+	public void updateBank(Bank bank) throws SQLException {
+		bankDAO.updateBank(bank);
+	}
+	
+//	public void deleteBank(int bankID) throws SQLException {
+//		bankDAO.deleteBank(bankID);
+//	}
 
 }

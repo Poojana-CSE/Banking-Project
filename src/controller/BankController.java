@@ -53,10 +53,18 @@ public class BankController {
 					
 					
 				case 4:
-					viewAccount();
+//					viewAccount();
 					break;
 					
 					
+				case 5:
+					updateBank();
+					break;
+					
+				
+				case 6:
+					deleteBank();
+					break;
 					
 				}		
 				
@@ -69,8 +77,8 @@ public class BankController {
 		System.out.println("2. Update Account");
 		System.out.println("3. Delete Account");
 		System.out.println("4. View Account");
-//		System.out.println("5. Create Account");
-//		System.out.println("6. Create Account");
+		System.out.println("5. Update Bank");
+		System.out.println("7. Delete Account");
 //		System.out.println("7. Create Account");
 //		System.out.println("8. Create Account");
 		System.out.println("0. Exit");
@@ -161,18 +169,49 @@ public class BankController {
 	}
 	
 	
-	public void viewAccount() throws NumberFormatException, IOException {
+//	public void viewAccount() throws NumberFormatException, IOException {
+//	
+//		System.out.println("Enter Account ID to view: ");
+//		int accountId = Integer.parseInt(br.readLine());
+//		try {
+//	       Account account = accountService.viewAccount(accountId);
+//	       System.out.println("Account Details: " + account);
+//	    } catch (SQLException e) {
+//	        System.out.println("Failed to view account: " + e.getMessage());
+//	    }
+//		
+//		
+//	}
 	
-		System.out.println("Enter Account ID to view: ");
-		int accountId = Integer.parseInt(br.readLine());
-		try {
-	       Account account = accountService.viewAccount(accountId);
-	       System.out.println("Account Details: " + account);
+	
+	
+	public void updateBank() throws NumberFormatException, IOException, SQLException
+	{
+		System.out.println("Enter the Bank ID: ");
+		int bankId = Integer.parseInt(br.readLine());
+		System.out.println("Enter the New Bank Name: ");
+		String newBankName = br.readLine();
+		System.out.println("Enter the New Bank Branch: ");
+		String newBankBranch = br.readLine();
+		
+		Bank bank = new Bank(bankId,newBankName,newBankBranch);
+		bankService.updateBank(bank);
+		
+		
+	}
+	
+	
+	
+	public void deleteBank() throws NumberFormatException, IOException {
+		System.out.println("Enter Bank ID to delete: ");
+	    int bankId = Integer.parseInt(br.readLine());
+
+	    try {
+	        accountService.deleteAccount(bankId);
+	        System.out.println("Account deleted successfully.");
 	    } catch (SQLException e) {
-	        System.out.println("Failed to view account: " + e.getMessage());
+	        System.out.println("Failed to delete account: " + e.getMessage());
 	    }
-		
-		
 	}
 	
 	
