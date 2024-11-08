@@ -46,7 +46,9 @@ public class BankController {
 					break;
 					
 					
-					
+				case 3:
+					deleteAccount();
+					break;
 					
 				}		
 				
@@ -57,7 +59,7 @@ public class BankController {
 		System.out.println("----------Banking Application-----------");
 		System.out.println("1. Create Account");
 		System.out.println("2. Update Account");
-//		System.out.println("3. Create Account");
+		System.out.println("3. Delete Account");
 //		System.out.println("4. Create Account");
 //		System.out.println("5. Create Account");
 //		System.out.println("6. Create Account");
@@ -134,5 +136,18 @@ public class BankController {
 	
 	
 	
+	
+	
+	public void deleteAccount() throws SQLException, IOException {
+	    System.out.println("Enter Account ID to delete: ");
+	    int accountId = Integer.parseInt(br.readLine());
+
+	    try {
+	        accountService.deleteAccount(accountId);
+	        System.out.println("Account deleted successfully.");
+	    } catch (SQLException e) {
+	        System.out.println("Failed to delete account: " + e.getMessage());
+	    }
+	}
 	
 }//end of main class	

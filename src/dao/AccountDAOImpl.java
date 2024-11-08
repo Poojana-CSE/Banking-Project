@@ -45,7 +45,20 @@ public class AccountDAOImpl implements AccountDAO {
 				}
 			}
 		}
-		
+		@Override
+		public void deleteAccount(int accountId) throws SQLException {
+	        String sql = "DELETE FROM Account WHERE accountId = ?";
+	        try (Connection con = DBConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setInt(1, accountId);
+	            
+	            int result = ps.executeUpdate();
+	            if (result == 0) {
+	                throw new SQLException("Delete failed: No account found with the specified account ID.");
+	            }
+	        }
+	    }
+
 		
 		
 		

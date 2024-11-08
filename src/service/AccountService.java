@@ -22,4 +22,9 @@ public class AccountService {
 	public void updateAccount(Account account) throws SQLException, InvalidAccountTypeException {
 		accountDAO.updateAccount(account);
 	}
+	
+	public void deleteAccount(int accountId) throws SQLException {
+		accountDAO.deleteAccount(accountId);
+	}
+	
 }
