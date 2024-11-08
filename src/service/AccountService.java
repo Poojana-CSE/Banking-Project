@@ -19,5 +19,7 @@ public class AccountService {
 		accountDAO.createAccount(account);
 	}
 	
-	
+	public void updateAccount(Account account) throws SQLException, InvalidAccountTypeException {
+		accountDAO.updateAccount(account);
+	}
 }

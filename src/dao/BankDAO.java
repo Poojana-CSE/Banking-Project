@@ -8,4 +8,6 @@ import model.Bank;
 public interface BankDAO {
 	
 	Bank getBankById(int bankId) throws SQLException, BankingException; 
+	
 }
+

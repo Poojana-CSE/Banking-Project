@@ -13,13 +13,10 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public void createAccount(Account account) throws SQLException, InvalidAccountTypeException {
 		
-		
-		
-		String sql = "Insert into Account(customerId,bankId,accountType,balance) values(?,?,?,?)";
-		
+		String sql1 = "Insert into Account(customerId,bankId,accountType,balance) values(?,?,?,?)";
 		
 		try(Connection con = DBConnection.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql))
+				PreparedStatement ps = con.prepareStatement(sql1))
 		{
 			ps.setInt(1, account.getCustomerId());
 			ps.setInt(2, account.getBankId().getBankId());
@@ -29,13 +26,30 @@ public class AccountDAOImpl implements AccountDAO {
 			int result = ps.executeUpdate();
 			if(result == 0) {
 				throw new InvalidAccountTypeException("" + "Account Type Not Recognized");
-				
+				}
+		}
+	}
+		
+		@Override
+		public void updateAccount(Account account) throws SQLException {
+			String sql = "UPDATE Account SET bankId = ?, accountType = ?, balance = ? WHERE accountId = ?";
+			try (Connection con = DBConnection.getConnection();
+			     PreparedStatement ps = con.prepareStatement(sql)) {
+				ps.setInt(1, account.getBankId().getBankId());
+				ps.setString(2, account.getAccountType());
+				ps.setDouble(3, account.getBalance());
+				ps.setInt(4, account.getAccountId());
+				int result = ps.executeUpdate();
+				if (result == 0) {
+					throw new SQLException("Update failed: No account found with the specified account ID.");
+				}
 			}
-			
 		}
 		
 		
 		
-	}
-	
-}
+		
+		
+		
+}//end
+		

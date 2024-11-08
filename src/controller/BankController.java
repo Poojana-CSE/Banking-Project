@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import exception.BankingException;
 import exception.InvalidAccountTypeException;
 import model.Bank;
+import model.CurrentAccount;
 import model.SavingsAccount;
 import service.AccountService;
 import service.BankService;
@@ -38,14 +39,24 @@ public class BankController {
 				case 1:
 					createAccount();
 					break;//fall through concept
-				}				
+					
+					
+				case 2:
+					updateAccount();
+					break;
+					
+					
+					
+					
+				}		
+				
 			}
 	}
 	
 	public void displayMenu() {
 		System.out.println("----------Banking Application-----------");
 		System.out.println("1. Create Account");
-//		System.out.println("2. Create Account");
+		System.out.println("2. Update Account");
 //		System.out.println("3. Create Account");
 //		System.out.println("4. Create Account");
 //		System.out.println("5. Create Account");
@@ -82,19 +93,46 @@ public class BankController {
 		else if("Current".equalsIgnoreCase(accountType)) {
 			System.out.println("Enter the Over Draft Limit: ");
 			double overdraftLimit = Double.parseDouble(br.readLine());
+			accountService.createAccount(new CurrentAccount(0,cusId,bank,accountType,balance,overdraftLimit));
 		}
 		
 		else {
 			System.out.println("Invalid Account Type");
 		}
 		
+	}
+	
+	
+	
+	public void updateAccount() throws SQLException, InvalidAccountTypeException, IOException, BankingException {
+		System.out.println("Enter Account ID to update: ");
+		int accountId = Integer.parseInt(br.readLine());
+		System.out.println("Enter New Bank ID: ");
+		int bankId = Integer.parseInt(br.readLine());
+		Bank bank = bankService.getBankById(bankId);
+		System.out.println("Enter New Account Type (Savings/Current): ");
+		String accountType = br.readLine();
+		System.out.println("Enter New Balance: ");
+		double balance = Double.parseDouble(br.readLine());
 		
+		if ("Savings".equalsIgnoreCase(accountType)) {
+			System.out.println("Enter New Interest Rate: ");
+			double interestRate = Double.parseDouble(br.readLine());
+			SavingsAccount updatedAccount = new SavingsAccount(accountId, 0, bank, accountType, balance, interestRate);
+			accountService.updateAccount(updatedAccount);
+		} else if ("Current".equalsIgnoreCase(accountType)) {
+			System.out.println("Enter New Overdraft Limit: ");
+			double overdraftLimit = Double.parseDouble(br.readLine());
+			CurrentAccount updatedAccount = new CurrentAccount(accountId, 0, bank, accountType, balance, overdraftLimit);
+			accountService.updateAccount(updatedAccount);
+		} else {
+			throw new InvalidAccountTypeException("Invalid account type provided.");
+		}
 		
+		System.out.println("Account updated successfully.");
 	}
 	
 	
 	
 	
-	
-	
-}
+}//end of main class	
