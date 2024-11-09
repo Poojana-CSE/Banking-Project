@@ -12,41 +12,56 @@ import java.util.Date;
 import java.util.List;
 
 public class TransactionHistoryUtil {
-	private static final String FILEPATH = "transactionHistory.txt";
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final String FILE_PATH=" transaction_history.text";
+	private static final SimpleDateFormat dateFormat=new SimpleDateFormat("yyy-mm-dd HH:mm:ss");
 	
-	//METHODS TO SAVE TRANSACTION DETAILS
-	public static void saveTransaction(String transactionType, int accountId, double amount) throws IOException {
-		String timeStamp = dateFormat.format(new Date());
-		String record = String.format("%s | %s | Account Id: % | Amount: %.2f",timeStamp,transactionType,accountId, amount);
-		
-		try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILEPATH,true))){
+	//method to save transaction details
+	public static void saveTransaction(String transactionType,int accountId,double amount) throws IOException
+	{
+		String timestamp=dateFormat.format(new Date());
+		String record = String.format("%s | %s |Account ID: %d"+" | Amount: %.2f ",timestamp,transactionType,accountId,amount);
+		try(BufferedWriter writer=new BufferedWriter(new FileWriter(FILE_PATH,true)))
+		{
 			writer.write(record);
 			writer.newLine();
 		}
-		catch(IOException e) {
-			System.err.println("Error writing to transactionHistory.txt");
+		catch(IOException e)
+		{
+			System.err.println("Error writing to transaction history file");
 		}
-		
-		
 	}
-	
-	
-	//Method to retrive and display transaction history
-	public static List<String> retriveTransactionHistory() throws FileNotFoundException, IOException{
+//method to retrieve and display the transaction history
+
+	public static List<String>retriveTransactionHistory() throws FileNotFoundException, IOException
+	{
+		List<String> history =new ArrayList<String>();
 		
-		List<String> history = new ArrayList<String>();
-		try(BufferedReader reader = new BufferedReader(new FileReader(FILEPATH))){
-			
+		try(BufferedReader reader=new BufferedReader(new FileReader(FILE_PATH)))
+		{
 			String line;
-			while((line = reader.readLine())!=null) {
+			while((line=reader.readLine())!=null){
 				history.add(line);
 			}
-		} catch(IOException e) {
-			System.err.println("Error reading to transactionHistory.txt");
 		}
-		
-		return history;
+		catch(IOException e)
+		{
+			System.err.println("Error reading transaction history file!");
+		}
+		return null;
 	}
+	
+	
+	public static void saveTransaction(String transactionType,int from_account,int to_account,double amount) throws IOException{
+        String timestamp=dateFormat.format(new Date());
+        String record=String.format("%s |%s| From AccountId: %d To Account %d "+"|Amount: %.2f",timestamp,transactionType,from_account,to_account,amount);
+        try(BufferedWriter writer=new BufferedWriter(new FileWriter(FILE_PATH,true))){
+            writer.write(record);
+            writer.newLine();
+            
+        }
+        catch(IOException e){
+            System.err.println("Error writing to transcation history file");
+        }
+    }//transaction history
 	
 }

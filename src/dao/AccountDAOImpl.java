@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import exception.AccountNotFoundException;
 import exception.InvalidAccountTypeException;
 import model.Account;
 import utility.DBConnection;
@@ -62,22 +63,26 @@ public class AccountDAOImpl implements AccountDAO {
 	    }
 
 		
-		@Override
-		public Account viewAccount(int accountId) throws SQLException {
-			String sql = "Select * from Account where accountId = ?";
-			try (Connection con = DBConnection.getConnection();
-					PreparedStatement ps = con.prepareStatement(sql)){
-				ps.setInt(1,accountId);
-			
-			ResultSet rs = ps.executeQuery(sql);
-			if(rs.next()) {
-				
-				
-				
+		public void viewAccount(int accountId) throws SQLException, AccountNotFoundException {
+			String sql="select * from Account where accountId = ?";
+			try(Connection con = DBConnection.getConnection();
+					PreparedStatement ps=con.prepareStatement(sql))
+			{
+				ps.setInt(1, accountId);
+				ResultSet rs = ps.executeQuery();
+				if(rs.next()) {
+					System.out.println("Account ID: "+rs.getString("accountId")+"\n");
+					System.out.println("Customer ID: "+rs.getString("customerId")+"\n");
+					System.out.println("Bank ID: "+rs.getString("bankId")+"\n");
+					System.out.println("Account Type: "+rs.getString("accountType")+"\n");
+					System.out.println("Balance: "+rs.getString("balance")+"\n");
+					
+				}else {
+					throw new AccountNotFoundException(""+"Account ID Invalid");
+					
 				}
-			
 			}
-			return null;
+			
 		}
 
 }

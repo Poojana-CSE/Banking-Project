@@ -7,6 +7,6 @@ import exception.TransactionFailureException;
 
 public interface TransactionDAO {
 	void deposit(int accountId, double amount) throws InvalidTransactionAmountException, SQLException, TransactionFailureException;
-	void withdraw(int accountId,double amount);
-	void transferFunds(int fromAccount,int toAccount, double amount);
+	void withdraw(int accountId,double amount) throws InvalidTransactionAmountException, TransactionFailureException;
+	void transferFunds(int fromAccount,int toAccount, double amount) throws TransactionFailureException, InvalidTransactionAmountException;
 }

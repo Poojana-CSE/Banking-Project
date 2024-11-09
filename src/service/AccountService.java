@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import dao.AccountDAO;
 import dao.AccountDAOImpl;
+import exception.AccountNotFoundException;
 import exception.InvalidAccountTypeException;
 import model.Account;
 
@@ -27,8 +28,8 @@ public class AccountService {
 		accountDAO.deleteAccount(accountId);
 	}
 	
-//	public Account viewAccount(int accountId) throws SQLException {
-//		return accountDAO.viewAccount(accountId);
-//	}
+	public void viewAccount(int accountId) throws SQLException, AccountNotFoundException {
+		 accountDAO.viewAccount(accountId);
+	}
 	
 }
